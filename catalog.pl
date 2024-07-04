@@ -10,11 +10,12 @@ use Carp;
 use Data::Dump qw(dump);
 use Data::Table::Text qw(:all);
 
-my $catalog  = q(catalog.html);                                                 # Catalog file
+my $catalogHtm = q(catalog.html);                                               # Catalog file as html
+my $catalogCsv = q(catalog.csv);                                                # Catalog file as csv
 
 makeDieConfess;
 
-my @f = searchDirectoryTreesForMatchingFiles currentDirectory, qw(.txt);
+my @f = searchDirectoryTreesForMatchingFiles currentDirectory, qw(.txt);        # Files to process
 
 my @m;
 for my $f(@f)                                                                   # Read each file
@@ -26,19 +27,31 @@ for my $f(@f)                                                                   
  }
 
 if (@m)                                                                         # Create html
- {my @h = <<END;
+ {my @k = sort keys $m[0]->%*;
+  my @h = <<END;
 <table border=0 cellpadding=10>
 END
 
-  push @h, join ' ', '<tr>', map {"<th>$_"} sort keys $m[0]->%*;                # Table column headers
+  push @h, join ' ', '<tr>', map {"<th>$_"} @k;                                 # Table column headers
 
   for my $m(@m)
    {my @k = sort keys $m->%*;
-    my @d = map {"<td>".$$m{$_}} @k;                                            # Data in column header order
+    my @d = map {"<td>".$$m{$_}} @k;
     push @h, join ' ', "<tr>", @d;
    }
   push @h, <<END;
 </table>
 END
-  owf $ARGV[1]//$catalog, join "\n", @h;
+  owf $catalogHtm, join "\n", @h;
+ }
+
+if (@m)                                                                         # Create csv
+ {my @k = sort keys $m[0]->%*;
+  my @h = join ', ',  @k;
+
+  for my $m(@m)
+   {my @d = map {"<td>".$$m{$_}} @k;
+    push @h, join ', ', map {"$_"} @d;
+   }
+  owf $catalogCsv, join "\n", @h;
  }
