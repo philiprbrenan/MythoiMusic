@@ -1,4 +1,4 @@
-# Test 2024-07-04 at 02:33:33
+# Test 2024-07-04 at 02:40:31
 
 name: Test
 
@@ -28,9 +28,9 @@ jobs:
 
     - name: Scan
       run: |
-        perl catalog.pl catalog.html
+        perl catalog.pl catalog.csv
 
     - uses: actions/upload-artifact@v4
       with:
         name: Catalog
-        path: catalog.html
+        path: catalog.csv
