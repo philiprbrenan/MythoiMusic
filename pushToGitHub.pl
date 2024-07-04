@@ -58,12 +58,12 @@ jobs:
 
     - name: Scan
       run: |
-        perl catalog.pl catalog.html
+        perl catalog.pl catalog.csv
 
     - uses: actions/upload-artifact\@v4
       with:
         name: Catalog
-        path: catalog.html
+        path: catalog.csv
 END
 
   my $f = writeFileUsingSavedToken $user, $repo, $wf, $y;                       # Upload workflow
