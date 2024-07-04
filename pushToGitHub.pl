@@ -14,7 +14,7 @@ my $home  = currentDirectory;                                                   
 my $user  = q(philiprbrenan);                                                   # User
 my $repo  = q(MythoiMusic);                                                     # Repo
 my $in    = qq(DataCollection.htm);                                             # Input html
-my $wf    = q(.github/workflows/MythoiMusic.yml);                               # Work flow on Ubuntu
+my $wf    = q(.github/workflows/main.yml);                                      # Work flow on Ubuntu
 
 push my @files, searchDirectoryTreesForMatchingFiles($home, qw(.txt .pl .htm));
 
