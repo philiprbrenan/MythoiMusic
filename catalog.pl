@@ -50,7 +50,7 @@ if (@m)                                                                         
   my @h = join ', ',  @k;
 
   for my $m(@m)
-   {my @d = map {"<td>".$$m{$_}} @k;
+   {my @d = map {$$m{$_}} @k;
     push @h, join ', ', map {"$_"} @d;
    }
   owf $catalogCsv, join "\n", @h;
